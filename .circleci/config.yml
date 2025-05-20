@@ -3,7 +3,7 @@ version: 2.1
 executors:
   python-executor:
     docker:
-      - image: cimg/python:3.10  # 官方CircleCI Python镜像
+      - image: cimg/python:3.10
     working_directory: ~/repo
 
 jobs:
@@ -11,7 +11,6 @@ jobs:
     executor: python-executor
     steps:
       - checkout
-
       - run:
           name: 安装依赖
           command: |
@@ -21,14 +20,12 @@ jobs:
             pip install requests
             pip install python-dotenv
             playwright install chromium
-
       - run:
           name: 运行脚本
           command: |
             export TG_BOT_TOKEN="${TG_BOT_TOKEN}"
             export TG_CHAT_ID="${TG_CHAT_ID}"
             python idx.py
-
       - run:
           name: 提交并推送 cookie.json（如有变更）
           command: |
@@ -43,7 +40,7 @@ workflows:
   keep-alive-schedule:
     triggers:
       - schedule:
-          cron: "0,30 * * * *"  # 每半小时执行一次
+          cron: "0,30 * * * *"
           filters:
             branches:
               only:
