@@ -948,7 +948,7 @@ async def run(playwright: Playwright) -> bool:
         
         # 启动浏览器
         browser = await playwright.chromium.launch(
-            headless=False,  # 设置为True在生产环境中运行
+            headless=True,  # 设置为True在生产环境中运行
             slow_mo=300,
             args=browser_args
         )
