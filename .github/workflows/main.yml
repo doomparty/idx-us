@@ -33,8 +33,10 @@ jobs:
 
     - name: Run script
       env:
-        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        TG_TOKEN: ${{ secrets.TG_TOKEN }}
         TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        IDX_EMAIL: ${{ secrets.IDX_EMAIL }}
+        IDX_PASSWORD: ${{ secrets.IDX_PASSWORD }}
       run: python idx.py --once
 
     - name: Commit and push if changed
