@@ -171,8 +171,13 @@ def send_to_telegram(message):
             "text": md_message,
             "parse_mode": "MarkdownV2"
         }
-        response = requests.post(url, data=data, timeout=10)
+        
+        response = requests.post(url, data=data, timeout=30)
         log_message(f"Telegram通知状态: {response.status_code}")
+        if response.status_code == 200:
+            log_message("Telegram通知发送成功")
+        else:
+            log_message(f"Telegram通知发送失败，响应内容: {response.text}")
     except Exception as e:
         log_message(f"发送Telegram通知失败: {e}")
 
@@ -1284,15 +1289,15 @@ async def main():
             extract_and_display_credentials()
         except Exception as extract_error:
             log_message(f"提取凭据时出错: {extract_error}")
-    
-    # 发送通知（无论成功失败都推送）
-    if all_messages:
-        try:
-            log_message("发送执行通知...")
-            full_message = "\n".join(all_messages)
-            send_to_telegram(full_message)
-        except Exception as notify_error:
-            log_message(f"发送通知时出错: {notify_error}")
+    finally:
+        # 发送通知（无论成功失败都推送）
+        if all_messages:
+            try:
+                log_message("发送执行通知...")
+                full_message = "\n".join(all_messages)
+                send_to_telegram(full_message)
+            except Exception as notify_error:
+                log_message(f"发送通知时出错: {notify_error}")
 
 async def scheduled_main():
     """定时执行主函数的调度器"""
