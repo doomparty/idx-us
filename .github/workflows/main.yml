@@ -29,7 +29,7 @@ jobs:
         pip install asyncio
         pip install requests
         pip install python-dotenv
-        playwright install chromium
+        playwright install firefox
 
     - name: Run script
       env:
