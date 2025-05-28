@@ -1284,8 +1284,15 @@ async def main():
             extract_and_display_credentials()
         except Exception as extract_error:
             log_message(f"提取凭据时出错: {extract_error}")
-            
-        # 这里不再发送通知，由scheduled_main统一处理
+    
+    # 发送通知（无论成功失败都推送）
+    if all_messages:
+        try:
+            log_message("发送执行通知...")
+            full_message = "\n".join(all_messages)
+            send_to_telegram(full_message)
+        except Exception as notify_error:
+            log_message(f"发送通知时出错: {notify_error}")
 
 async def scheduled_main():
     """定时执行主函数的调度器"""
