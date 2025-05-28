@@ -1,9 +1,9 @@
 name: Auto Shell Keep Alive
 
-#on:
-#  schedule:
-#    - cron: '0,30 * * * *'  # 每半时执行一次
-#  workflow_dispatch:
+on:
+  schedule:
+    - cron: '0,30 * * * *'  # 每半时执行一次
+  workflow_dispatch:
 
 jobs:
   keep-alive:
@@ -35,7 +35,7 @@ jobs:
       env:
         TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
         TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-      run: python idx.py
+      run: python idx.py --once
 
     - name: Commit and push if changed
       run: |
